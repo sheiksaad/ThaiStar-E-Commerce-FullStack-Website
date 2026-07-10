@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
 import productRoutes from "./routes/product.routes";
 import orderRoutes from "./routes/order.routes";
+import uploadRoutes from "./routes/upload.routes";
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.get("/", (_req, res) => {
   res.json({

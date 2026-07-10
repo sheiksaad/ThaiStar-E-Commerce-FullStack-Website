@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../utils/api";
 import toast from "react-hot-toast";
+import ImageUpload from "../components/ui/ImageUpload";
 
 const STATUS_OPTIONS = ["PENDING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"];
 const STATUS_COLORS: Record<string, string> = {
@@ -122,15 +123,23 @@ export default function AdminPage() {
             {tab === "add" && (
                 <div className="card p-6 max-w-xl">
                     <form onSubmit={addProduct} className="space-y-4">
+                        <div>
+                            <label className="text-sm text-gray-600 block mb-1">
+                                Product Image
+                            </label>
+                            <ImageUpload
+                                value={form.image}
+                                onChange={(url) => setForm({ ...form, image: url })}
+                            />
+                        </div>
                         {[
                             { label: "Part ka Naam", key: "name", placeholder: "Brake Pad Set" },
                             { label: "Description", key: "description", placeholder: "Product ki detail" },
                             { label: "Brand", key: "brand", placeholder: "Honda / Local" },
-                            { label: "Image URL (optional)", key: "image", placeholder: "https://..." },
                         ].map(({ label, key, placeholder }) => (
                             <div key={key}>
                                 <label className="text-sm text-gray-600 block mb-1">{label}</label>
-                                <input className="input" placeholder={placeholder} value={(form as any)[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} required={key !== "image"} />
+                                <input className="input" type="text" placeholder={placeholder} value={form[key as keyof typeof form]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} required />
                             </div>
                         ))}
                         <div className="grid grid-cols-2 gap-4">
