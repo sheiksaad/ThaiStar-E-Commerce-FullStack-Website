@@ -4,9 +4,10 @@ import jwt from "jsonwebtoken";
 import prisma from "../prisma";
 import { AuthRequest } from "../middleware/auth.middleware";
 
-const generateToken = (id: string) =>
-  jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: (process.env.JWT_EXPIRE as string) || "7d" });
-
+const generateToken = (id: string): string =>
+  jwt.sign({ id }, process.env.JWT_SECRET as string, {
+    expiresIn: "7d",
+  });
 // ── POST /api/auth/register ───────────────
 export const register = async (req: Request, res: Response) => {
   try {
